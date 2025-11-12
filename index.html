@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page Design</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #FEDCC5 0%, #FEDDC6 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 背景装饰元素 */
+        .bg-decoration {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: url('assets/background-image.png');
+            background-size: cover;
+            background-position: center;
+            filter: blur(8px);
+            opacity: 0.6;
+            z-index: 1;
+        }
+
+        /* 主容器 */
+        .main-container {
+            width: 1200px;
+            height: 700px;
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(20px);
+            border-radius: 32px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            max-width: 95vw;
+            max-height: 95vh;
+            overflow: hidden;
+            z-index: 2;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 左侧登录区域 */
+        .login-section {
+            width: 50%;
+            height: 100%;
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(25px);
+            border-radius: 32px 0 0 32px;
+        }
+
+        /* 右侧图片区域 */
+        .image-section {
+            width: 50%;
+            height: 100%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: url('assets/background-image.png');
+            background-size: cover;
+            background-position: center;
+            border-radius: 0 32px 32px 0;
+        }
+
+        /* 右侧小动物图片 */
+        .character-image {
+            width: 320px;
+            height: 320px;
+            background: url('assets/character.svg');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.1));
+        }
+
+        /* Logo */
+        .logo {
+            color: #F25019;
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        /* 标题 */
+        .title {
+            color: #333333;
+            font-size: 42px;
+            font-weight: bold;
+            line-height: 1.2;
+            margin-bottom: 32px;
+        }
+
+        /* 表单组 */
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-label {
+            color: #333333;
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 1.2;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 16px 20px;
+            background: #FFFFFF;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #333333;
+            outline: none;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .form-input::placeholder {
+            color: #BFBFBF;
+        }
+
+        .form-input:focus {
+            box-shadow: 0 0 0 2px rgba(242, 80, 25, 0.2);
+        }
+
+        /* 密码输入框容器 */
+        .password-container {
+            position: relative;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            fill: #BFBFBF;
+            transition: fill 0.3s ease;
+        }
+
+        .password-toggle:hover {
+            fill: #F25019;
+        }
+
+        /* 忘记密码链接 */
+        .forgot-password {
+            color: #F25019;
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 1.2;
+            text-decoration: none;
+            float: right;
+            margin-top: 8px;
+            margin-bottom: 24px;
+            transition: color 0.3s ease;
+        }
+
+        .forgot-password:hover {
+            color: #d63f0a;
+            text-decoration: underline;
+        }
+
+        /* 登录按钮 */
+        .login-btn {
+            width: 100%;
+            padding: 18px;
+            background: #F25019;
+            color: #FFFFFF;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            line-height: 1.2;
+            cursor: pointer;
+            margin-bottom: 32px;
+            transition: all 0.3s ease;
+        }
+
+        .login-btn:hover {
+            background: #d63f0a;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(242, 80, 25, 0.3);
+        }
+
+        /* 分割线文本 */
+        .divider {
+            text-align: center;
+            color: #666666;
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 1.2;
+            margin-bottom: 24px;
+        }
+
+        /* 社交登录按钮 */
+        .social-login {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .social-btn {
+            flex: 1;
+            height: 48px;
+            background: #FFFFFF;
+            border: none;
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .social-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .social-icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* 注册链接 */
+        .register-link {
+            text-align: center;
+            font-size: 14px;
+            line-height: 1.2;
+        }
+
+        .register-text {
+            color: #666666;
+            font-weight: 400;
+        }
+
+        .register-btn {
+            color: #F25019;
+            font-weight: bold;
+            text-decoration: none;
+            margin-left: 4px;
+            transition: color 0.3s ease;
+        }
+
+        .register-btn:hover {
+            color: #d63f0a;
+            text-decoration: underline;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 1200px) {
+            .main-container {
+                width: 90vw;
+                height: auto;
+                min-height: 600px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                flex-direction: column;
+                width: 95vw;
+                height: auto;
+            }
+
+            .login-section {
+                width: 100%;
+                padding: 40px 30px;
+                border-radius: 32px 32px 0 0;
+            }
+
+            .image-section {
+                width: 100%;
+                height: 200px;
+                border-radius: 0 0 32px 32px;
+            }
+
+            .character-image {
+                width: 150px;
+                height: 150px;
+            }
+
+            .title {
+                font-size: 32px;
+            }
+
+            .bg-decoration {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .login-section {
+                padding: 30px 20px;
+            }
+
+            .title {
+                font-size: 28px;
+            }
+
+            .social-login {
+                flex-direction: column;
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 背景装饰 -->
+    <div class="bg-decoration"></div>
+    
+    <!-- 主容器 -->
+    <div class="main-container">
+        <!-- 左侧登录区域 -->
+        <div class="login-section">
+            <!-- Logo -->
+            <div class="logo">Your logo</div>
+            
+            <!-- 标题 -->
+            <h1 class="title">Login</h1>
+            
+            <!-- 登录表单 -->
+            <form id="loginForm">
+                <!-- 邮箱输入 -->
+                <div class="form-group">
+                    <label class="form-label" for="email">Email</label>
+                    <input type="email" id="email" class="form-input" placeholder="username@gmail.com" required>
+                </div>
+                
+                <!-- 密码输入 -->
+                <div class="form-group">
+                    <label class="form-label" for="password">Password</label>
+                    <div class="password-container">
+                        <input type="password" id="password" class="form-input" placeholder="Password" required>
+                        <svg class="password-toggle" onclick="togglePassword()">
+                            <use href="assets/icons.svg#eye-hide"></use>
+                        </svg>
+                    </div>
+                </div>
+                
+                <!-- 忘记密码 -->
+                <a href="#" class="forgot-password">Forgot Password?</a>
+                <div style="clear: both;"></div>
+                
+                <!-- 登录按钮 -->
+                <button type="submit" class="login-btn">Sign in</button>
+            </form>
+            
+            <!-- 分割线 -->
+            <div class="divider">Or Continue With</div>
+            
+            <!-- 社交登录 -->
+            <div class="social-login">
+                <button class="social-btn" onclick="socialLogin('google')">
+                    <svg class="social-icon">
+                        <use href="assets/icons.svg#google"></use>
+                    </svg>
+                </button>
+                <button class="social-btn" onclick="socialLogin('github')">
+                    <svg class="social-icon">
+                        <use href="assets/icons.svg#github"></use>
+                    </svg>
+                </button>
+                <button class="social-btn" onclick="socialLogin('facebook')">
+                    <svg class="social-icon">
+                        <use href="assets/icons.svg#facebook"></use>
+                    </svg>
+                </button>
+            </div>
+            
+            <!-- 注册链接 -->
+            <div class="register-link">
+                <span class="register-text">Don't have an account yet?</span>
+                <a href="#" class="register-btn">Register for free</a>
+            </div>
+        </div>
+        
+        <!-- 右侧图片区域 -->
+        <div class="image-section">
+        </div>
+    </div>
+
+    <script>
+        // 切换密码显示/隐藏
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const toggleBtn = document.querySelector('.password-toggle');
+            const useElement = toggleBtn.querySelector('use');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                useElement.setAttribute('href', 'assets/icons.svg#eye-show');
+                toggleBtn.style.fill = '#F25019';
+            } else {
+                passwordInput.type = 'password';
+                useElement.setAttribute('href', 'assets/icons.svg#eye-hide');
+                toggleBtn.style.fill = '#BFBFBF';
+            }
+        }
+
+        // 社交登录
+        function socialLogin(provider) {
+            console.log(`${provider} 登录功能待实现`);
+        }
+
+        // 表单提交
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            if (email && password) {
+                console.log('登录功能待实现');
+            }
+        });
+
+        // 响应式处理
+        function handleResize() {
+            const container = document.querySelector('.main-container');
+            
+            if (window.innerWidth <= 768) {
+                container.style.flexDirection = 'column';
+            } else {
+                container.style.flexDirection = 'row';
+            }
+        }
+
+        window.addEventListener('resize', handleResize);
+        handleResize();
+    </script>
+</body>
+</html>
